@@ -1,0 +1,28 @@
+---
+- name: "Create Wizarr container"
+  containers.podman.podman_container:
+    name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    state: quadlet
+    ports:
+      - "5690:5690/tcp"
+    volumes:
+      - "{{ container_appdata_location }}/wizarr:/data:Z"
+    tmpfs:
+      /data/.cache/uv: "rw,mode=1777"
+    env:
+      UV_CACHE_DIR: /data/.cache/uv
+      DISABLE_BUILTIN_AUTH: false
+      PUID: 1000
+      PGID: 1000
+    restart_policy: always
+    quadlet_filename: wizarr
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

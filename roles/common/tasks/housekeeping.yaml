@@ -1,0 +1,61 @@
+---
+### housekeeping ###
+- name: Declare that this system is managed by bootc
+  ansible.builtin.file:
+    path: /etc/os-bootc
+    state: touch
+    mode: '0600'
+
+- name: Symlink timezone
+  ansible.builtin.file:
+    src: "/usr/share/zoneinfo/{{ timezone }}"
+    dest: /etc/localtime
+    owner: root
+    group: root
+    mode: '1777'
+
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0777'
+
+- name: Disable unused systemd units
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    masked: true
+  loop:
+    - rpm-ostree-countme.service
+    - ctrl-alt-del.target
+
+- name: Update bootc image
+  community.general.bootc_manage:
+    state: latest
+
+- name: Puller cronjob
+  ansible.builtin.cron:
+    name: "ansible-pull job for Puller repo"
+    minute: "0"
+    hour: "*/4"
+    day: "*"
+    month: "*"
+    job: |
+      echo -e "Puller cronjob has ran: $(date '+\%m-\%d-\%Y \%H:\%M:\%S')\n" > /etc/.ansible-managed && \
+      ansible-pull --only-if-changed --url {{ ansible_pull_url }} {% if ansible_run_tags %}--tags {{ ansible_run_tags }}{% endif %} {% if ansible_skip_tags %}--skip-tags {{ ansible_skip_tags }}{% endif %} >> /etc/.ansible-managed
+
+- name: Container backup cronjob
+  ansible.builtin.cron:
+    name: "rsync job for backing up container appdata"
+    minute: "30"
+    hour: "23"
+    day: "*"
+    month: "*"
+    job: |
+      echo "Backup cronjob has ran: $(date '+%m-%d-%Y %H:%M:%S')" > /var/opt/containers/.backup.log && \
+      rsync --compress --archive --update --recursive {{ item.src }} {{ item.dest }}
+  loop: "{{ backup_paths }}"
+  tags:
+    - always
+    - backup

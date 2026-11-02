@@ -1,0 +1,25 @@
+---
+- name: "Create Sonarr container"
+  containers.podman.podman_container:
+    name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    state: quadlet
+    ports:
+      - "8989:8989/tcp"
+    volumes:
+      - "{{ container_appdata_location }}/sonarr:/config:Z"
+      - "{{ media_dir }}:/media"
+    env:
+      PUID: 1000
+      PGID: 1000
+    restart_policy: always
+    quadlet_filename: sonarr
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

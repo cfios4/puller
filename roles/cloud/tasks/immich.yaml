@@ -1,0 +1,91 @@
+---
+- name: Create Immich Database container
+  containers.podman.podman_container:
+    name: immich-database
+    image: "ghcr.io/immich-app/postgres:{{ immich_database_version }}"
+    state: quadlet
+    pod: new:immich
+    volumes:
+      - "{{ container_appdata_location }}/immich-database:/var/lib/postgresql/data:z"
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+      POSTGRES_DB: immich
+      POSTGRES_INITDB_ARGS: --data-checksums
+    quadlet_filename: immich-database
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    # labels:
+    #   io.containers.autoupdate: registry
+    # restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+
+- name: Create Immich Caching container
+  containers.podman.podman_container:
+    name: immich-cache
+    image: docker.io/valkey/valkey:9
+    state: quadlet
+    pod: immich
+    healthcheck: redis-cli ping | grep -q PONG || exit 1
+    quadlet_filename: immich-cache
+    quadlet_file_mode: '0640'
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+
+- name: Create Immich Server container
+  containers.podman.podman_container:
+    name: immich-server
+    image: "ghcr.io/immich-app/immich-server:{{ immich_server_version }}"
+    state: quadlet
+    requires:
+      - immich-redis.container
+      - immich-database.container
+    pod: immich
+    ports:
+      - "2283:2283"
+    volumes:
+      - "{{ container_appdata_location }}/immich-server:/data:z" # photo uploads
+      - "/etc/localtime:/etc/localtime:ro"
+    env:
+      REDIS_HOSTNAME: localhost
+      DB_USERNAME: postgres
+      DB_PASSWORD: "{{ postgres_password }}"
+      DB_DATABASE_NAME: immich
+      DB_HOSTNAME: localhost
+    quadlet_filename: immich-server
+    quadlet_file_mode: '0640'
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+
+- name: Create Immich Machine Learning container
+  containers.podman.podman_container:
+    name: immich-ml
+    image: "ghcr.io/immich-app/immich-machine-learning:{{ immich_server_version }}"
+    state: quadlet
+    pod: immich
+    quadlet_filename: immich-ml
+    quadlet_file_mode: '0640'
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

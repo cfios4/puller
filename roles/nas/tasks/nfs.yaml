@@ -1,0 +1,14 @@
+---
+- name: Create NFS exports
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    line: "{{ item }}"
+    mode: "0644"
+    create: true
+  loop: "{{ nfs_export }}"
+
+- name: Enable NFS systemd unit
+  ansible.builtin.systemd_service:
+    name: "nfs-server.service"
+    state: started
+    enabled: true

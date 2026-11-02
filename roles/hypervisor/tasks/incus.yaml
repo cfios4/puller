@@ -1,0 +1,28 @@
+---
+- name: Create Incus container
+  containers.podman.podman_container:
+    name: incus
+    image: ghcr.io/cmspam/incus-docker:latest
+    state: quadlet
+    network: host
+    volumes:
+      - "{{ container_appdata_location }}/incus:/var/lib/incus:Z"
+      - "/lib/modules:/lib/modules:ro"
+      - "/dev:/dev"
+      # - "/run/openvswitch:/run/openvswitch"
+    privileged: true
+    pid: host
+    cgroupns: host
+    log_driver: none
+    security_opt: unmask=/sys/fs/cgroup
+    restart_policy: always
+    quadlet_filename: incus
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

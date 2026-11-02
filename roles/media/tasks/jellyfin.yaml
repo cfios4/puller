@@ -1,0 +1,27 @@
+---
+- name: Create Jellyfin container
+  containers.podman.podman_container:
+    name: jellyfin
+    image: docker.io/jellyfin/jellyfin:latest
+    state: quadlet
+    ports:
+      - "8096:8096/tcp"
+    volumes:
+      - "{{ container_appdata_location }}/jellyfin:/config:Z"
+      - "{{ media_dir }}:/media:ro"
+    tmpfs:
+       /cache: "rw,mode=1777"
+    env:
+      USER_UID: 1000
+      USER_GID: 1000
+    restart_policy: always
+    quadlet_filename: jellyfin
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

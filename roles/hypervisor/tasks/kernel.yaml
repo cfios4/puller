@@ -1,0 +1,9 @@
+---
+- name: Set kernel arguments (for local llm)
+  ansible.builtin.lineinfile:
+    path: /etc/kernel/cmdline
+    line: '\1 iommu=pt ttm.pages_limit=16777216 ttm.page_pool_size=16777216' # 60GB VRAM?
+    backrefs: true
+    regexp: '^(.*)'
+    create: true
+    mode: '0644'

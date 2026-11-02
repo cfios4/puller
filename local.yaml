@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: true
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  roles:
+    - role: common
+
+  tasks:  
+    - name: Include additonal roles
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+      loop: "{{ group_names | difference(['all']) }}"
+      tags: always

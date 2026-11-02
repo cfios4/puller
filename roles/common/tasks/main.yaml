@@ -1,0 +1,36 @@
+---
+- name: Include tasks for user(s)
+  ansible.builtin.include_tasks: users.yaml
+  tags: always
+
+- name: Include tasks for general housekeeping
+  ansible.builtin.include_tasks: housekeeping.yaml
+  tags: always
+
+- name: Include tasks for monitoring
+  ansible.builtin.include_tasks: beszel.yaml
+  tags: always
+
+- name: Include tasks for dns
+  ansible.builtin.include_tasks: dns.yaml
+  tags: 
+    - never
+    - dns
+
+# - name: Include tasks for local ai
+#   ansible.builtin.include_tasks: llm.yaml
+#   tags: 
+#     - never
+#     - llm
+
+# - name: Include tasks for Builder host
+#   ansible.builtin.import_tasks: builder.yaml
+#   tags:
+#     - never
+#     - builder
+
+- name: Include tasks for Entrypoint
+  ansible.builtin.import_tasks: entrypoint.yaml
+  tags:
+    - never
+    - entrypoint

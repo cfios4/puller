@@ -1,0 +1,29 @@
+---
+- name: Create watchdog
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/system.conf.d/10-ugreen-wdt.conf
+    line: |
+          [Manager]
+          WatchdogDevice=/dev/watchdog1
+          RuntimeWatchdogSec=120
+          ShutdownWatchdogSec=120
+    mode: '0644'
+    create: true
+
+- name: Set kernel arguments
+  ansible.builtin.lineinfile:
+    path: /etc/kernel/cmdline
+    line: '\1 i915'
+    backrefs: true
+    regexp: '^(.*)'
+    create: true
+    mode: '0644'
+
+- name: Add persistent modules
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+    persistent: true
+  loop:
+    - drm
+    - it87_wdt

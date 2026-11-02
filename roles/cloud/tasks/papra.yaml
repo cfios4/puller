@@ -1,0 +1,27 @@
+---
+- name: Create Papra container
+  containers.podman.podman_container:
+    name: papra
+    image: ghcr.io/papra-hq/papra:latest
+    state: quadlet
+    user: 1000:1000
+    ports:
+      - "1221:1221"
+    volumes:
+      - "{{ container_appdata_location }}/papra/appdata:/app/app-data:Z"
+      - "{{ container_appdata_location }}/papra/ingest:/app/ingestion:Z"
+    env:
+      APP_BASE_URL: "https://paper.{{ base_domain }}"
+      INGESTION_FOLDER_IS_ENABLED: true
+      AUTH_SECRET: "{{ papra_auth_secret }}"
+    quadlet_filename: papra
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

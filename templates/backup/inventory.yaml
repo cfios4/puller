@@ -1,0 +1,17 @@
+all:
+  children:
+    backup_clients:
+      hosts:
+        app01:
+          ansible_host: 192.0.2.21
+          # List of directories to pull
+          backup_sources: 
+            - /var/www/html
+            - /etc/nginx
+          # Base path on the backup server
+          backup_base_dest: /srv/backup-archives/app01
+        db01:
+          ansible_host: 192.0.2.22
+          backup_sources: 
+            - /var/lib/mysql/backups
+          backup_base_dest: /srv/backup-archives/db01

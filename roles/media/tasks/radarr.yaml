@@ -1,0 +1,25 @@
+---  
+- name: "Create Radarr container"
+  containers.podman.podman_container:
+    name: radarr
+    image: lscr.io/linuxserver/radarr:latest
+    state: quadlet
+    ports:
+      - "7878:7878/tcp"
+    volumes:
+      - "{{ container_appdata_location }}/radarr:/config:Z"
+      - "{{ media_dir }}:/media"
+    env:
+      PUID: 1000
+      PGID: 1000
+    restart_policy: always
+    quadlet_filename: radarr
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

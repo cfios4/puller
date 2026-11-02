@@ -1,0 +1,36 @@
+---
+- name: Include tasks for Jellyfin
+  ansible.builtin.include_tasks: jellyfin.yaml
+  tags: 
+    - media
+    - player
+
+- name: Include tasks for Radarr
+  ansible.builtin.include_tasks: radarr.yaml
+  tags: 
+    - media
+    - arr
+
+- name: Include tasks for Sonarr
+  ansible.builtin.include_tasks: sonarr.yaml
+  tags: 
+    - media
+    - arr
+
+- name: Include tasks for Sabnzbd
+  ansible.builtin.include_tasks: sabnzbd.yaml
+  tags: 
+    - media
+    - arr
+
+- name: Include tasks for Seerr
+  ansible.builtin.include_tasks: seerr.yaml
+  tags: 
+    - media
+    - request
+
+- name: Include tasks for Wizarr
+  ansible.builtin.include_tasks: wizarr.yaml
+  tags: 
+    - media
+    - invite

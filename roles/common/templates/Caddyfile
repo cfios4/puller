@@ -1,0 +1,52 @@
+### entrypoint
+{{ base_domain }} {
+    # dashlit
+    reverse_proxy localhost:3000
+}
+
+### cloud
+git.{{ base_domain }} {
+    # forgejo
+    reverse_proxy :3000
+}
+
+photos.{{ base_domain }} {
+    # immich
+    reverse_proxy :2283
+}
+
+paper.{{ base_domain }} {
+    # papra
+    reverse_proxy :1221
+}
+
+### media
+watch.{{ base_domain }} {
+    # jellyfin
+    reverse_proxy :8096
+}
+
+movies.internal.watch.{{ base_domain }} {
+    # radarr
+    reverse_proxy :7878
+}
+
+shows.internal.watch.{{ base_domain }} {
+    # sonarr
+    reverse_proxy :8989
+}
+
+dl.internal.watch.{{ base_domain }} {
+    # sabnzbd
+    reverse_proxy :8080
+}
+
+request.watch.{{ base_domain }} {
+    # seerr
+    reverse_proxy :5055
+}
+
+invite.watch.{{ base_domain }} {
+    # wizarr
+    reverse_proxy :5690
+}

@@ -1,0 +1,31 @@
+---
+- name: Pull multiple backup archives from clients
+  hosts: backup_clients
+  gather_facts: false
+
+  tasks:
+    - name: Ensure destination directories exist
+      ansible.builtin.file:
+        path: "{{ item.dest }}"
+        state: directory
+        mode: "0750"
+      loop: "{{ backup_paths }}"
+      delegate_to: localhost
+
+    - name: Push defined backup locations to server
+      ansible.posix.synchronize:
+        mode: push
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        archive: true
+        compress: true
+        delete: false
+      loop: 
+        - "{{ backup_paths }}"
+
+    - name: Log that backup was created on client
+      ansible.builtin.lineinfile:
+        path: "/var/log/ansible/backup.log"
+        line: "A backup job was executed on this host at: {{ ansible_date_time.iso8601 }}"
+        mode: "0644"
+        create: true

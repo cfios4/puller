@@ -1,0 +1,8 @@
+---
+- name: Include tasks for kernel args
+  ansible.builtin.include_tasks: kernel.yaml
+  tags: always
+
+- name: Include tasks for hypervisor
+  ansible.builtin.include_tasks: incus.yaml
+  tags: always

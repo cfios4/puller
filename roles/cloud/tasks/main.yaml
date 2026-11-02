@@ -1,0 +1,24 @@
+---
+- name: Include tasks for Immich quadlets
+  ansible.builtin.import_tasks: immich.yaml
+  tags:
+    - cloud
+    - photos
+  
+- name: Include tasks for Vaultwarden quadlets
+  ansible.builtin.import_tasks: vaultwarden.yaml
+  tags:
+    - cloud
+    - password
+
+- name: Include tasks for Forgejo quadlets
+  ansible.builtin.import_tasks: forgejo.yaml
+  tags:
+    - cloud
+    - git
+
+- name: Include tasks for Papra quadlets
+  ansible.builtin.import_tasks: papra.yaml
+  tags:
+    - cloud
+    - paper

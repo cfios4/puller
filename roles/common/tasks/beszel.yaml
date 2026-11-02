@@ -1,0 +1,54 @@
+---
+### quadlets ###
+
+# beszel #
+- name: Create a Beszel-Agent Quadlet
+  containers.podman.podman_container:
+    name: beszel-agent
+    image: docker.io/henrygd/beszel-agent:latest
+    state: quadlet
+    network: host
+    volumes:
+      - "/run/user/0/podman/podman.sock:/run/user/0/podman/podman.sock:ro"
+      - "/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro"
+    env:
+      KEY: "{{ beszel_agent_key }}"
+      HUB_URL: "{{ beszel_agent_hub_url }}"
+      TOKEN: "{{ beszel_agent_token }}"
+    restart_policy: always
+    quadlet_filename: beszel-agent
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+  tags: always
+
+- name: Create a Beszel-Hub Quadlet
+  containers.podman.podman_container:
+    name: beszel-hub
+    image: docker.io/henrygd/beszel:latest
+    state: quadlet
+    network: host
+    volumes:
+      - "{{ container_appdata_location }}/beszel-hub:/beszel_data"
+    env:
+      APP_URL: http://localhost:8090
+    restart_policy: always
+    quadlet_filename: beszel-hub
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+  tags:
+    - never
+    - beszel-hub

@@ -1,0 +1,55 @@
+---
+# builder #
+- name: Login to registry
+  containers.podman.podman_login:
+    registry: "{{ registry }}"
+    username: "{{ registry_username }}"
+    password: "{{ registry_password }}"
+
+- name: Build local bootc image
+  containers.podman.podman_quadlet_build:
+    name: localhost/bootc:latest
+    set_working_directory: files/builds/bootc
+    quadlet_filename: bootc
+    quadlet_dir: /etc/containers/systemd/builds
+
+- name: Build local toolbx image
+  containers.podman.podman_quadlet_build:
+    name: localhost/toolbx:latest
+    set_working_directory: files/builds/toolbx
+    quadlet_filename: toolbx
+    quadlet_dir: /etc/containers/systemd/builds
+
+- name: Create Skopeo Quadlet
+  containers.podman.podman_container:
+    name: skopeo
+    image: quay.io/skopeo/stable:latest
+    state: quadlet
+    rm: true
+    privileged: true
+    command: 
+      - "copy --authfile /etc/containers/registry-auth.json --retry-times 3 containers-storage:localhost/bootc:latest docker://{{ registry_repo }}/bootc:latest"
+      - "copy --authfile /etc/containers/registry-auth.json --retry-times 3 containers-storage:localhost/toolbx:latest docker://{{ registry_repo }}/toolbx:latest"
+    volumes:
+      - "/var/lib/containers/storage:/var/lib/containers/storage"
+      - "/run/containers/storage:/run/containers/storage"
+      - "/etc/containers/storage.conf:/etc/containers/storage.conf:ro"
+      - "/etc/containers/registry-auth.json:/etc/containers/registry-auth.json:ro"
+    quadlet_filename: skopeo
+    quadlet_file_mode: '0640'
+    quadlet_options:
+      - |
+        [Unit]
+        Requires=bootc.build toolbx.build
+        Wants=bootc.build toolbx.build
+        
+        [Service]quadlets
+        Type=oneshot 
+
+- name: Build Skopeo timer unit for build and push
+  ansible.builtin.copy:
+    src: files/builds/skopeo.timer
+    dest: /etc/systemd/system/skopeo.timer
+    owner: root
+    group: root
+    mode: '0644'

@@ -1,0 +1,25 @@
+- name: Create Forgejo container
+  containers.podman.podman_container:
+    name: forgejo
+    image: codeberg.org/forgejo/forgejo:latest
+    state: quadlet
+    ports:
+      - "3000:3000"
+      - "3022:22"
+    volumes:
+      - "{{ container_appdata_location }}/forgejo:/data:Z"
+      - "/etc/localtime:/etc/localtime:ro"
+    env:
+      USER_UID: 1000
+      USER_GID: 1000
+    quadlet_filename: forgejo
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

@@ -1,0 +1,23 @@
+---
+- name: Include tasks specific to Ugreen DXP4800 NAS
+  ansible.builtin.include_tasks: ugreen-dxp4800.yaml
+  tags: always
+
+- name: Include tasks for NFS
+  ansible.builtin.include_tasks: nfs.yaml
+  tags: always
+
+# - name: Include tasks for RAID
+#   ansible.builtin.include_tasks: raid.yaml
+#   tags: always
+
+# nfs service setup
+  # traditional playbook?
+# raid; rebuild, create
+  # not too sure how to handle this
+  # but maybe this isn't the place to handle and a traditional playbook application is more appropriate
+  # install as fcos first to setup disks then bootc rebase to custom image?
+
+  # hdds in raid 5 at /var/mnt/mass
+  # ssds in (encrypted) raid 1 at /var
+  # emmc as install disk at /boot /etc

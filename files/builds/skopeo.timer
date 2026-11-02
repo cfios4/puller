@@ -1,0 +1,12 @@
+[Unit]
+Description=Build and push bootc and toolbx images daily
+Requires=skopeo.container
+Wants=skopeo.container
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=10min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

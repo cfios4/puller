@@ -1,0 +1,13 @@
+[Unit]
+Description=Run Ansible Backup daily at 2am
+
+[Timer]
+# Format: DayOfWeek Year-Month-Day Hour:Minute:Second
+OnCalendar=*-*-* 02:00:00
+# Ensures the backup runs immediately if the server was down during the scheduled time
+Persistent=true
+# Links this timer to the service file above
+Unit=backup.service
+
+[Install]
+WantedBy=timers.target

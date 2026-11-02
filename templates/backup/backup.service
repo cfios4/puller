@@ -1,0 +1,14 @@
+[Unit]
+Description=Ansible Backup Pull Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=backupuser
+# Update paths to your actual ansible-playbook binary and file locations
+ExecStart=/usr/bin/ansible-playbook -i /home/backupuser/backups/inventory.yaml /home/backupuser/backups/backup.yaml
+# Ensure the environment knows where the ansible.posix collection is
+Environment=ANSIBLE_COLLECTIONS_PATH=/home/backupuser/.ansible/collections
+
+[Install]
+WantedBy=multi-user.target

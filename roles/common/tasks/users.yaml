@@ -1,0 +1,38 @@
+---
+### user ###
+- name: Add user 'bootc'
+  ansible.builtin.user:
+    name: bootc
+    groups: wheel
+    append: yes
+    shell: /bin/bash
+    create_home: true
+    expires: -1
+
+- name: Move SSH authorized_keys from root user to bootc user
+  ansible.builtin.copy:
+    src: /root/authorized_keys
+    dest: /home/bootc/.ssh/authorized_keys.d/authorized_keys
+    owner: bootc
+    group: bootc
+    mode: '0600'
+    remote_src: true
+
+- name: Remove authorized_keys from root user
+  ansible.builtin.file:
+    path: /root/authorized_keys
+    state: absent
+
+- name: Allow bootc user to linger
+  ansible.builtin.file:
+    path: /var/lib/systemd/linger/bootc
+    state: touch
+    mode: '0644'
+
+- name: Copy bashrc
+  ansible.builtin.copy:
+    src: files/.bashrc.d
+    dest: /home/bootc/
+    owner: bootc
+    group: bootc
+    mode: '0755'

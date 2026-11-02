@@ -1,0 +1,25 @@
+---
+- name: "Create Sabnzbd container"
+  containers.podman.podman_container:
+    name: sabnzbd
+    image: lscr.io/linuxserver/sabnzbd:latest
+    state: quadlet
+    ports:
+      - "8080:8080/tcp"
+    volumes:
+      - "{{ container_appdata_location }}/sabnzbd:/config:Z"
+      - "{{ media_dir }}:/media"
+    env:
+      PUID: 1000
+      PGID: 1000
+    restart_policy: always
+    quadlet_filename: sabnzbd
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

@@ -1,0 +1,50 @@
+---
+- name: Copy Caddyfile
+  ansible.builtin.template:
+    src: templates/entrypoint/Caddyfile
+    dest: "{{ container_appdata_location }}/caddy/Caddyfile"
+
+- name: Create Caddy container
+  containers.podman.podman_container:
+    name: caddy
+    image: docker.io/library/caddy:latest
+    state: quadlet
+    network: host
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - "{{ container_appdata_location }}/caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "{{ container_appdata_location }}/caddy:/data:Z"
+    quadlet_filename: caddy
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target
+
+- name: Create dashboard
+  containers.podman.podman_container:
+    name: dashlit
+    image: ghcr.io/codewec/dashlit:latest
+    state: quadlet
+    ports:
+      - "3000:3000"
+    volumes:
+      - "{{ container_appdata_location }}/dashlit:/data:Z"
+    quadlet_filename: dashlit
+    quadlet_file_mode: '0640'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Install]
+        WantedBy=default.target

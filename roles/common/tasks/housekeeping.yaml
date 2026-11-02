@@ -56,6 +56,4 @@
       echo "Backup cronjob has ran: $(date '+%m-%d-%Y %H:%M:%S')" > /var/opt/containers/.backup.log && \
       rsync --compress --archive --update --recursive {{ item.src }} {{ item.dest }}
   loop: "{{ backup_paths }}"
-  tags:
-    - always
-    - backup
+  when: skip_backup is not defined #!= "true"

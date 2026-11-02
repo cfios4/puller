@@ -44,6 +44,7 @@ all:
     
       hosts:
         mrs-puff.servers.lan:
+          skip_backup: true
     #     moose.servers.lan:
     #       ansible_host: 10.0.30.21
     #       backup_paths:

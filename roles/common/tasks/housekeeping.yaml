@@ -44,7 +44,7 @@
     day: "*"
     month: "*"
     job: >-
-      echo -e "Puller cronjob has ran: $(date '+\%m-\%d-\%Y \%H:\%M:\%S')\n" > /etc/.ansible-managed && \
+      echo -e "Puller cronjob has ran: $(date '+\%m-\%d-\%Y \%H:\%M:\%S')\n" > /etc/.ansible-managed &&
       ansible-pull --only-if-changed --inventory inventory.yaml --vault-password-file /root/.vault --url {{ ansible_pull_url }} {% if ansible_run_tags %}--tags {{ ansible_run_tags }}{% endif %} {% if ansible_skip_tags %}--skip-tags {{ ansible_skip_tags }}{% endif %} >> /etc/.ansible-managed
 
 - name: Container backup cronjob
@@ -55,7 +55,6 @@
     day: "*"
     month: "*"
     job: >-
-      echo "Backup cronjob has ran: $(date '+%m-%d-%Y %H:%M:%S')" > /var/opt/containers/.backup.log && \
+      echo "Backup cronjob has ran: $(date '+%m-%d-%Y %H:%M:%S')" > /var/opt/containers/.backup.log &&
       rsync --compress --archive --update --recursive {{ item.src }} {{ item.dest }}
   loop: "{{ backup_paths }}"
-  # when: skip_backup is not defined #!= "true"

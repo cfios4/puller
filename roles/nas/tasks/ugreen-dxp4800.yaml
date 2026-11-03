@@ -10,14 +10,14 @@
     mode: '0644'
     create: true
 
-- name: Set kernel arguments
-  ansible.builtin.lineinfile:
-    path: /etc/kernel/cmdline
-    line: '\1 i915'
-    backrefs: true
-    regexp: '^(.*)'
-    create: true
-    mode: '0644'
+# - name: Set kernel arguments
+#   ansible.builtin.lineinfile:
+#     path: /boot/loader/entries/bootc_fedora-44-1.conf
+#     line: '\1 i915'
+#     backrefs: true
+#     regexp: '^(.*)'
+#     create: true
+#     mode: '0644'
 
 - name: Add persistent modules
   community.general.modprobe:

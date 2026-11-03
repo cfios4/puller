@@ -17,7 +17,7 @@
     security_opt: unmask=/sys/fs/cgroup
     restart_policy: always
     quadlet_filename: incus
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/
     labels:
       io.containers.autoupdate: registry

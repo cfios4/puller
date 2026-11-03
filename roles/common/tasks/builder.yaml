@@ -36,7 +36,7 @@
       - "/etc/containers/storage.conf:/etc/containers/storage.conf:ro"
       - "/etc/containers/registry-auth.json:/etc/containers/registry-auth.json:ro"
     quadlet_filename: skopeo
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     quadlet_options:
       - |
         [Unit]

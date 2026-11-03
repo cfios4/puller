@@ -33,12 +33,10 @@
     - ctrl-alt-del.target
 
 - name: Add wheel to sudoers
-  ansible.builtin.lineinfile:
-    path: /etc/sudoers.d/wheel-nopasswd
-    line: "%wheel ALL=(ALL) NOPASSWD: ALL"
-    state: present
-    mode: '0440'
-    validate: '/usr/sbin/visudo -cf %s'   
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/wheel-nopasswd
+    src: "%wheel ALL=(ALL) NOPASSWD: ALL"
+    mode: '0440' 
 
 - name: Puller cronjob
   ansible.builtin.cron:

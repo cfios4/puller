@@ -13,7 +13,7 @@
       USER_UID: 1000
       USER_GID: 1000
     quadlet_filename: forgejo
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
     labels:
       io.containers.autoupdate: registry

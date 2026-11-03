@@ -14,7 +14,7 @@
       PGID: 1000
     restart_policy: always
     quadlet_filename: sabnzbd
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
     labels:
       io.containers.autoupdate: registry

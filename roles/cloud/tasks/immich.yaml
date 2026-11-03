@@ -13,7 +13,7 @@
       POSTGRES_DB: immich
       POSTGRES_INITDB_ARGS: --data-checksums
     quadlet_filename: immich-database
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
     # labels:
     #   io.containers.autoupdate: registry
@@ -32,7 +32,7 @@
     pod: immich
     healthcheck: redis-cli ping | grep -q PONG || exit 1
     quadlet_filename: immich-cache
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     labels:
       io.containers.autoupdate: registry
     restart_policy: always
@@ -63,7 +63,7 @@
       DB_DATABASE_NAME: immich
       DB_HOSTNAME: localhost
     quadlet_filename: immich-server
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     labels:
       io.containers.autoupdate: registry
     restart_policy: always
@@ -80,7 +80,7 @@
     state: quadlet
     pod: immich
     quadlet_filename: immich-ml
-    quadlet_file_mode: '0640'
+    quadlet_file_mode: '0644'
     labels:
       io.containers.autoupdate: registry
     restart_policy: always

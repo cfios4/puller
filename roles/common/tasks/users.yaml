@@ -11,7 +11,7 @@
 
 - name: Move SSH authorized_keys from root user to bootc user
   ansible.builtin.copy:
-    src: /root/authorized_keys
+    src: /root/.ssh/authorized_keys
     dest: /home/bootc/.ssh/authorized_keys.d/authorized_keys
     owner: bootc
     group: bootc

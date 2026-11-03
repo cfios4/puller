@@ -1,3 +1,12 @@
+---
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/vaultwarden"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+
 - name: Create Vaultwarden container
   containers.podman.podman_container:
     name: vaultwarden

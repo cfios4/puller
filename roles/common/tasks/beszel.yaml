@@ -28,6 +28,17 @@
         WantedBy=default.target
   tags: always
 
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/beszel-hub"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+  tags:
+    - never
+    - beszel-hub
+
 - name: Create a Beszel-Hub Quadlet
   containers.podman.podman_container:
     name: beszel-hub

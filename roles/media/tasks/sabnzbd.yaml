@@ -1,4 +1,12 @@
 ---
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/sabnzbd"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+
 - name: "Create Sabnzbd container"
   containers.podman.podman_container:
     name: sabnzbd

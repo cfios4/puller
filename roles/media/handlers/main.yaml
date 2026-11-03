@@ -2,7 +2,7 @@
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: restarted
-    scope: "1000"
+    scope: global
     daemon_reload: true
   loop:
     - jellyfin

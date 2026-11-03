@@ -1,4 +1,15 @@
 ---
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/immich/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+  loop:
+    - immich-database
+    - immich-server
+
 - name: Create Immich Database container
   containers.podman.podman_container:
     name: immich-database
@@ -6,7 +17,7 @@
     state: quadlet
     pod: new:immich
     volumes:
-      - "{{ container_appdata_location }}/immich-database:/var/lib/postgresql/data:z"
+      - "{{ container_appdata_location }}/immich/immich-database:/var/lib/postgresql/data:z"
     env:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "{{ postgres_password }}"
@@ -54,7 +65,7 @@
     ports:
       - "2283:2283"
     volumes:
-      - "{{ container_appdata_location }}/immich-server:/data:z" # photo uploads
+      - "{{ container_appdata_location }}/immich/immich-server:/data:z" # photo uploads
       - "/etc/localtime:/etc/localtime:ro"
     env:
       REDIS_HOSTNAME: localhost

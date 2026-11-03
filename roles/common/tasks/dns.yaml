@@ -1,4 +1,12 @@
 ---
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/pihole"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+
 - name: Create Pi-hole container
   containers.podman.podman_container:
     name: pihole
@@ -10,8 +18,8 @@
       - "53:53/udp"
       - "80:80/tcp"
       - "443:443/tcp"
-      # - "67:67/udp"
-      # - "123:123/udp"
+      # - "67:67/udp" # DHCP
+      # - "123:123/udp" # NTP
     volumes:
       - "{{ container_appdata_location }}/pihole:/etc/pihole:Z"
       - "/etc/dnsmasq.d:/etc/dnsmasq.d:z"

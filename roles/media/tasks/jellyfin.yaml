@@ -1,4 +1,12 @@
 ---
+- name: Create containers directory
+  ansible.builtin.file:
+    path: "{{ container_appdata_location }}/jellyfin"
+    state: directory
+    owner: root
+    group: root
+    mode: '1777'
+
 - name: Create Jellyfin container
   containers.podman.podman_container:
     name: jellyfin

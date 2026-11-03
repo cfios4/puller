@@ -24,3 +24,11 @@
       - |
         [Install]
         WantedBy=default.target
+
+- name: Open firewall port for Seerr
+  ansible.posix.firewalld:
+    service: 5055/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

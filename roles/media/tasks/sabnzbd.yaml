@@ -23,3 +23,11 @@
       - |
         [Install]
         WantedBy=default.target
+
+- name: Open firewall port for Sabnzbd
+  ansible.posix.firewalld:
+    service: 8080/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

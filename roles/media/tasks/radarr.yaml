@@ -23,3 +23,11 @@
       - |
         [Install]
         WantedBy=default.target
+
+- name: Open firewall port for Radarr
+  ansible.posix.firewalld:
+    service: 7878/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

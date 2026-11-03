@@ -26,3 +26,11 @@
       - |
         [Install]
         WantedBy=default.target
+
+- name: Open firewall port for Wizarr
+  ansible.posix.firewalld:
+    service: 5690/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

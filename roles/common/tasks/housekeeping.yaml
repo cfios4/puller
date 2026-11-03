@@ -43,7 +43,7 @@
     month: "*"
     job: |
       echo -e "Puller cronjob has ran: $(date '+\%m-\%d-\%Y \%H:\%M:\%S')\n" > /etc/.ansible-managed && \
-      ansible-pull --only-if-changed --url {{ ansible_pull_url }} {% if ansible_run_tags %}--tags {{ ansible_run_tags }}{% endif %} {% if ansible_skip_tags %}--skip-tags {{ ansible_skip_tags }}{% endif %} >> /etc/.ansible-managed
+      ansible-pull --only-if-changed --vault-password-file /root/.vault --url {{ ansible_pull_url }} {% if ansible_run_tags %}--tags {{ ansible_run_tags }}{% endif %} {% if ansible_skip_tags %}--skip-tags {{ ansible_skip_tags }}{% endif %} >> /etc/.ansible-managed
 
 - name: Container backup cronjob
   ansible.builtin.cron:

@@ -1,11 +1,16 @@
 ---
 - name: Create containers directory
   ansible.builtin.file:
-    path: "{{ container_appdata_location }}/papra"
+    path: "{{ container_appdata_location }}/papra/{{ app_for_data }}"
     state: directory
     owner: root
     group: root
     mode: '1777'
+  loop:
+    - appdata
+    - ingest
+  loop_control:
+    loop_var: app_for_data
 
 - name: Create Papra container
   containers.podman.podman_container:

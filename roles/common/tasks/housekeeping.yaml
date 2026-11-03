@@ -7,10 +7,10 @@
     mode: '0600'
 
 - name: Symlink timezone
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: "/usr/share/zoneinfo/{{ timezone }}"
     dest: /etc/localtime
-    state: link
+    remote_src: true
     owner: root
     group: root
     mode: '1777'

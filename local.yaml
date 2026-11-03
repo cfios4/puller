@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: all
   gather_facts: true
   become: true
   ignore_errors: "{{ ansible_check_mode }}"

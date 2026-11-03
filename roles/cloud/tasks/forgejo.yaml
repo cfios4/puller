@@ -44,7 +44,7 @@
     immediate: true
     offline: true
   loop:
-    - 3000
-    - 3022
+    - 3000/tcp
+    - 3022/tcp
   loop_control:
     loop_var: forgejo_ports

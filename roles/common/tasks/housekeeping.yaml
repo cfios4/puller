@@ -35,7 +35,7 @@
 - name: Add wheel to sudoers
   ansible.builtin.copy:
     dest: /etc/sudoers.d/wheel-nopasswd
-    src: "%wheel ALL=(ALL) NOPASSWD: ALL"
+    content: "%wheel ALL=(ALL) NOPASSWD: ALL"
     mode: '0440' 
 
 - name: Puller cronjob

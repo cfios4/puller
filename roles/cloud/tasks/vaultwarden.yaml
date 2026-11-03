@@ -16,7 +16,6 @@
       - "8000:80"
     volumes:
       - "{{ container_appdata_location }}/vaultwarden:/data:Z"
-      - "{{ container_appdata_location }}/papra/ingest:/app/ingestion:Z"
     env:
       DOMAIN: "https://paper.{{ base_domain }}"
     quadlet_filename: vaultwarden

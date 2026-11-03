@@ -39,7 +39,7 @@
 - name: Puller cronjob
   ansible.builtin.cron:
     name: "ansible-pull job for Puller repo"
-    minute: "0"
+    minute: "1"
     hour: "*/4"
     day: "*"
     month: "*"

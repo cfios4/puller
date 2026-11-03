@@ -4,6 +4,7 @@
     name: sabnzbd
     image: lscr.io/linuxserver/sabnzbd:latest
     state: quadlet
+    network: new:media
     ports:
       - "8080:8080/tcp"
     volumes:

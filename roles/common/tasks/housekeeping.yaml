@@ -60,3 +60,14 @@
       echo "Backup cronjob has ran: $(date '+%m-%d-%Y %H:%M:%S')" > /var/opt/containers/.backup.log &&
       rsync --compress --archive --update --recursive {{ item.src }} {{ item.dest }}
   loop: "{{ backup_paths }}"
+
+- name: Bootc upgrade
+  ansible.builtin.cron:
+    name: "Upgrade bootc image (apply on next reboot)"
+    minute: "30"
+    hour: "3"
+    day: "*"
+    month: "*"
+    job: >-
+      echo "Checked for bootc upgrade: $(date '+%m-%d-%Y %H:%M:%S')" > /etc/.bootc-upgrade &&
+      bootc upgrade >> /etc/.bootc-upgrade

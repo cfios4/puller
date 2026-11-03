@@ -32,9 +32,13 @@
     - rpm-ostree-countme.service
     - ctrl-alt-del.target
 
-# - name: Update bootc image
-#   community.general.bootc_manage:
-#     state: latest
+- name: Add wheel to sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/wheel-nopasswd
+    line: "%wheel ALL=(ALL) NOPASSWD: ALL"
+    state: present
+    mode: '0440'
+    validate: '/usr/sbin/visudo -cf %s'   
 
 - name: Puller cronjob
   ansible.builtin.cron:

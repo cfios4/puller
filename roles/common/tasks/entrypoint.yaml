@@ -48,3 +48,15 @@
       - |
         [Install]
         WantedBy=default.target
+
+- name: Open firewall port for Caddy and dashboard
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true
+  loop:
+    - 8080/tcp
+    - 8443/tcp
+    - 3000/tcp

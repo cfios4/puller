@@ -32,9 +32,9 @@
     - rpm-ostree-countme.service
     - ctrl-alt-del.target
 
-- name: Update bootc image
-  community.general.bootc_manage:
-    state: latest
+# - name: Update bootc image
+#   community.general.bootc_manage:
+#     state: latest
 
 - name: Puller cronjob
   ansible.builtin.cron:

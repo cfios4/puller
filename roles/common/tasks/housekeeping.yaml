@@ -11,9 +11,9 @@
     src: "/usr/share/zoneinfo/{{ timezone }}"
     dest: /etc/localtime
     state: link
+    force: true
     owner: root
     group: root
-    mode: '1777'
 
 - name: Create containers directory
   ansible.builtin.file:

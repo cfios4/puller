@@ -19,12 +19,10 @@ all:
     hypervisor:
       hosts:
         gary.servers.lan: # + dns
-          ansible_host: 10.0.30.2
 
     nas:
       hosts:
         mrs-puff.servers.lan: # + media backup builder
-          ansible_host: 10.0.30.3
           nfs_export:
             - /var/srv/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
             - /var/mnt/mass/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
@@ -35,8 +33,7 @@ all:
         immich_database_version: 14-vectorchord1.1.1
 
       hosts:
-        obin.servers.lan:
-          ansible_host: 10.0.30.11
+        moose.servers.lan:
 
     media:
       vars:
@@ -44,8 +41,10 @@ all:
     
       hosts:
         mrs-puff.servers.lan:
-    #     moose.servers.lan:
-    #       ansible_host: 10.0.30.21
+
+    # llm:
+    #   hosts:
+    #     obin.servers.lan:
     #       backup_paths:
     #         - src: "{{ container_appdata_location }}"
     #           dest: "{{ backup_appdata_location }}/{{ group_names[0] }}/{{ inventory_hostname }}"

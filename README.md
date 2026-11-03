@@ -23,7 +23,7 @@ The `tasks/entrypoint.yaml` is a frontend task to install Caddy with a Caddyfile
 ### New Capabilities:
 Decide if it is something that should be a new role (something a dedicated server would be likely to handle in its entirety) or if its a simple one-off that could be tacked on to another server
 - New roles should be added to `roles/<role_name>` with a consistent structure as the other roles
-- Single tasks should be add to `tasks/<task_name>.yaml`
+- Single tasks should be add to `roles/common/tasks/<task_name>.yaml` or within a more appropriate/new role
 
 If it takes more than a handful of tasks and involves copying files or templates, it should probably be a role
 

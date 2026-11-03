@@ -37,7 +37,7 @@ all:
 
     media:
       vars:
-        media_dir: /var/mnt/mass
+        media_dir: /var/mnt/mass/media
     
       hosts:
         mrs-puff.servers.lan:

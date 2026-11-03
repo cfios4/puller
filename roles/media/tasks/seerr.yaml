@@ -27,7 +27,7 @@
 
 - name: Open firewall port for Seerr
   ansible.posix.firewalld:
-    service: 5055/tcp
+    port: 5055/tcp
     state: enabled
     permanent: true
     immediate: true

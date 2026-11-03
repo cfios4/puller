@@ -41,7 +41,7 @@
 
 - name: Open firewall port for PiHole
   ansible.posix.firewalld:
-    service: "{{ item }}"
+    port: "{{ item }}"
     state: enabled
     permanent: true
     immediate: true

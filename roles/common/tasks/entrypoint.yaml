@@ -51,7 +51,7 @@
 
 - name: Open firewall port for Caddy and dashboard
   ansible.posix.firewalld:
-    service: "{{ item }}"
+    port: "{{ item }}"
     state: enabled
     permanent: true
     immediate: true

@@ -29,7 +29,7 @@
 
 - name: Open firewall port for Wizarr
   ansible.posix.firewalld:
-    service: 5690/tcp
+    port: 5690/tcp
     state: enabled
     permanent: true
     immediate: true

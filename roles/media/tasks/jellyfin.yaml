@@ -28,7 +28,7 @@
 
 - name: Open firewall port for Jellyfin
   ansible.posix.firewalld:
-    service: 8096/tcp
+    port: 8096/tcp
     state: enabled
     permanent: true
     immediate: true

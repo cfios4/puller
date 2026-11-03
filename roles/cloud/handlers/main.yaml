@@ -1,0 +1,14 @@
+- name: daemon-reload media stack
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: restarted
+    scope: global
+    daemon_reload: true
+  loop:
+    - forgejo
+    - papra
+    - vaultwarden
+    - immich-database
+    - immich-cache
+    - immich-server
+    - immich-ml

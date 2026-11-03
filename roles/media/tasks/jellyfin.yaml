@@ -4,6 +4,7 @@
     name: jellyfin
     image: docker.io/jellyfin/jellyfin:latest
     state: quadlet
+    network: bridge
     ports:
       - "8096:8096/tcp"
     volumes:

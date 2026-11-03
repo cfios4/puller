@@ -4,6 +4,7 @@
     name: wizarr
     image: ghcr.io/wizarrrr/wizarr:latest
     state: quadlet
+    network: bridge
     ports:
       - "5690:5690/tcp"
     volumes:

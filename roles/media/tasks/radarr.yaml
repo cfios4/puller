@@ -4,6 +4,7 @@
     name: radarr
     image: lscr.io/linuxserver/radarr:latest
     state: quadlet
+    network: bridge
     ports:
       - "7878:7878/tcp"
     volumes:

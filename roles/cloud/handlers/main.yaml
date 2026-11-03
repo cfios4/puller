@@ -1,46 +1,62 @@
 - name: daemon-reload quadlets
   ansible.builtin.systemd_service:
     daemon_reload: true
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart forgejo
   ansible.builtin.systemd_service:
     name: forgejo
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart papra
   ansible.builtin.systemd_service:
     name: papra
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart vaultwarden
   ansible.builtin.systemd_service:
     name: vaultwarden
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart immich-database
   ansible.builtin.systemd_service:
     name: immich-database
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart immich-cache
   ansible.builtin.systemd_service:
     name: immich-cache
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart immich-server
   ansible.builtin.systemd_service:
     name: immich-server
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart immich-ml
   ansible.builtin.systemd_service:
     name: immich-ml
     state: restarted
-    scope: global
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"

@@ -9,6 +9,14 @@
     create_home: true
     expires: -1
 
+- name: Create bootc .ssh directory
+  ansible.builtin.file:
+    path: /home/bootc/.ssh
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Move SSH authorized_keys from root user to bootc user
   ansible.builtin.copy:
     src: /root/.ssh/authorized_keys

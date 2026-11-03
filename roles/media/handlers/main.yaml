@@ -1,13 +1,55 @@
-- name: daemon-reload media stack
+---
+- name: daemon-reload quadlets
   ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: restarted
-    scope: global
+    scope: user
     daemon_reload: true
-  loop:
-    - jellyfin
-    - radarr
-    - sonarr
-    - sabnzbd 
-    - seerr
-    - wizarr
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"  
+
+- name: restart jellyfin
+  ansible.builtin.systemd_service:
+    name: jellyfin
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart radarr
+  ansible.builtin.systemd_service:
+    name: radarr
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart sonarr
+  ansible.builtin.systemd_service:
+    name: sonarr
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart sabnzbd
+  ansible.builtin.systemd_service:
+    name: sabnzbd
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart seerr
+  ansible.builtin.systemd_service:
+    name: seerr
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart wizarr
+  ansible.builtin.systemd_service:
+    name: wizarr
+    state: restarted
+    scope: user
+  environment: 
+    XDG_RUNTIME_DIR: "/run/user/1000"

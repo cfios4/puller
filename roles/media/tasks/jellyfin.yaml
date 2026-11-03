@@ -34,7 +34,9 @@
       - |
         [Install]
         WantedBy=default.target
-  notify: daemon-reload media stack
+  notify: 
+    - daemon-reload quadlets
+    - restart jellyfin
 
 - name: Open firewall port for Jellyfin
   ansible.posix.firewalld:

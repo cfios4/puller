@@ -32,7 +32,9 @@
       - |
         [Install]
         WantedBy=default.target
-  notify: daemon-reload media stack
+  notify: 
+    - daemon-reload quadlets
+    - restart sabnzbd
 
 - name: Open firewall port for Sabnzbd
   ansible.posix.firewalld:

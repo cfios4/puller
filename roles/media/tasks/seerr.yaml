@@ -33,7 +33,9 @@
       - |
         [Install]
         WantedBy=default.target
-  notify: daemon-reload media stack
+  notify: 
+    - daemon-reload quadlets
+    - restart seerr
 
 - name: Open firewall port for Seerr
   ansible.posix.firewalld:

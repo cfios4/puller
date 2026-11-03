@@ -35,7 +35,9 @@
       - |
         [Install]
         WantedBy=default.target
-  notify: daemon-reload media stack
+  notify: 
+    - daemon-reload quadlets
+    - restart wizarr
 
 - name: Open firewall port for Wizarr
   ansible.posix.firewalld:

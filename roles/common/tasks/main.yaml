@@ -7,11 +7,11 @@
   ansible.builtin.include_tasks: housekeeping.yaml
   tags: always
 
-- name: Include tasks for monitoring
+- name: Include tasks for Monitoring
   ansible.builtin.include_tasks: beszel.yaml
   tags: always
 
-- name: Include tasks for dns
+- name: Include tasks for DNS
   ansible.builtin.include_tasks: dns.yaml
   tags: 
     - never

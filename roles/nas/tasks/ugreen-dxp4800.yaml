@@ -21,9 +21,11 @@
 
 - name: Add persistent modules
   community.general.modprobe:
-    name: "{{ item }}"
+    name: "{{ module }}"
     state: present
     persistent: present
   loop:
     - drm
     - it87_wdt
+  loop_control:
+    loop_var: module

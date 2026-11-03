@@ -30,3 +30,14 @@
       - |
         [Install]
         WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart vaultwarden
+
+- name: Open firewall port for Vaultwarden
+  ansible.posix.firewalld:
+    port: 8000/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

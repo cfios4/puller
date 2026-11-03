@@ -36,6 +36,9 @@
       - |
         [Install]
         WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart immich-database
 
 - name: Create Immich Caching container
   containers.podman.podman_container:
@@ -54,6 +57,9 @@
       - |
         [Install]
         WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart immich-cache
 
 - name: Create Immich Server container
   containers.podman.podman_container:
@@ -85,6 +91,9 @@
       - |
         [Install]
         WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart immich-server
 
 - name: Create Immich Machine Learning container
   containers.podman.podman_container:
@@ -102,3 +111,14 @@
       - |
         [Install]
         WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart immich-ml
+
+- name: Open firewall port for Immich
+  ansible.posix.firewalld:
+    port: 2283/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

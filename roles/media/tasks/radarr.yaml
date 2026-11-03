@@ -8,10 +8,10 @@
       - "7878:7878/tcp"
     volumes:
       - "{{ container_appdata_location }}/radarr:/config:Z"
-      - "{{ media_dir }}:/media"
+      - "{{ media_dir }}:/media:z"
     env:
-      PUID: 1000
-      PGID: 1000
+      PUID: 0
+      PGID: 0
     restart_policy: always
     quadlet_filename: radarr
     quadlet_file_mode: '0644'

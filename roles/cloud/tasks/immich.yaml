@@ -1,5 +1,5 @@
 ---
-- name: Create containers directory
+- name: Create immich containers directory
   ansible.builtin.file:
     path: "{{ container_appdata_location }}/immich/{{ app_for_data }}"
     state: directory
@@ -55,9 +55,10 @@
     restart_policy: always
     quadlet_options:
       - Pull=newer
-      - After=immich-database.service
-      - Requires=immich-database.service
       - |
+        [Unit]
+        After=immich-database.service
+        Requires=immich-database.service
         [Install]
         WantedBy=default.target
   notify: 
@@ -92,9 +93,10 @@
     restart_policy: always
     quadlet_options:
       - Pull=newer
-      - After=immich-database.service
-      - Requires=immich-database.service
       - |
+        [Unit]
+        After=immich-database.service
+        Requires=immich-database.service
         [Install]
         WantedBy=default.target
   notify: 
@@ -115,9 +117,10 @@
     restart_policy: always
     quadlet_options:
       - Pull=newer
-      - After=immich-database.service
-      - Requires=immich-database.service
       - |
+        [Unit]
+        After=immich-database.service
+        Requires=immich-database.service
         [Install]
         WantedBy=default.target
   notify: 

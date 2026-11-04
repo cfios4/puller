@@ -89,8 +89,6 @@
       - immich-redis.container
       - immich-database.container
     pod: immich.pod
-    ports:
-      - "2283:2283"
     volumes:
       - "{{ container_appdata_location }}/immich/immich-server:/data:z" # photo uploads
       - "/etc/localtime:/etc/localtime:ro"

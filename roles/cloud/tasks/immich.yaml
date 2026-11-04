@@ -31,7 +31,7 @@
     name: immich-database
     image: "ghcr.io/immich-app/postgres:{{ immich_database_version }}"
     state: quadlet
-    pod: immich
+    pod: immich.pod
     volumes:
       - "{{ container_appdata_location }}/immich/immich-database:/var/lib/postgresql/data:z"
     env:
@@ -59,7 +59,7 @@
     name: immich-cache
     image: docker.io/valkey/valkey:9
     state: quadlet
-    pod: immich
+    pod: immich.pod
     healthcheck: redis-cli ping | grep -q PONG || exit 1
     quadlet_filename: immich-cache
     quadlet_file_mode: '0644'
@@ -88,7 +88,7 @@
     requires:
       - immich-redis.container
       - immich-database.container
-    pod: immich
+    pod: immich.pod
     ports:
       - "2283:2283"
     volumes:
@@ -124,7 +124,7 @@
     name: immich-ml
     image: "ghcr.io/immich-app/immich-machine-learning:{{ immich_server_version }}"
     state: quadlet
-    pod: immich
+    pod: immich.pod
     quadlet_filename: immich-ml
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/

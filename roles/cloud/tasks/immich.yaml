@@ -54,7 +54,9 @@
       io.containers.autoupdate: registry
     restart_policy: always
     quadlet_options:
-      - "Pull=newer"
+      - Pull=newer
+      - After=immich-database.service
+      - Requires=immich-database.service
       - |
         [Install]
         WantedBy=default.target
@@ -89,7 +91,9 @@
       io.containers.autoupdate: registry
     restart_policy: always
     quadlet_options:
-      - "Pull=newer"
+      - Pull=newer
+      - After=immich-database.service
+      - Requires=immich-database.service
       - |
         [Install]
         WantedBy=default.target
@@ -110,7 +114,9 @@
       io.containers.autoupdate: registry
     restart_policy: always
     quadlet_options:
-      - "Pull=newer"
+      - Pull=newer
+      - After=immich-database.service
+      - Requires=immich-database.service
       - |
         [Install]
         WantedBy=default.target

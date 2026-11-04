@@ -37,6 +37,11 @@
     state: touch
     mode: '0644'
 
+- name: Start user manager for bootc
+  systemd_service:
+    name: user@1000.service
+    state: started
+
 - name: Copy bashrc
   ansible.builtin.copy:
     src: files/.bashrc.d

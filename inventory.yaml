@@ -24,7 +24,7 @@ all:
       hosts:
         mrs-puff.servers.lan: # + media backup builder
           nfs_export:
-            - /var/srv/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
+            - /var/mnt/fast/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
             - /var/mnt/mass/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
 
     cloud:

@@ -86,7 +86,7 @@
     image: "ghcr.io/immich-app/immich-server:{{ immich_server_version }}"
     state: quadlet
     requires:
-      - immich-redis.container
+      - immich-cache.container
       - immich-database.container
     pod: immich.pod
     volumes:

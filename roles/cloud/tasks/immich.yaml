@@ -85,9 +85,6 @@
     name: immich-server
     image: "ghcr.io/immich-app/immich-server:{{ immich_server_version }}"
     state: quadlet
-    requires:
-      - immich-cache.container
-      - immich-database.container
     pod: immich.pod
     volumes:
       - "{{ container_appdata_location }}/immich/immich-server:/data:z" # photo uploads

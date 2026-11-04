@@ -3,14 +3,14 @@
   ansible.builtin.file:
     path: "{{ container_appdata_location }}/forgejo"
     state: directory
-    owner: root
-    group: root
+    owner: 1000
+    group: 1000
     mode: '1777'
 
 - name: Create Forgejo container
   containers.podman.podman_container:
     name: forgejo
-    image: codeberg.org/forgejo/forgejo:latest
+    image: codeberg.org/forgejo/forgejo:17
     state: quadlet
     ports:
       - "3000:3000"

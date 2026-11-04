@@ -32,7 +32,7 @@
     #   io.containers.autoupdate: registry
     # restart_policy: always
     quadlet_options:
-      - "Pull=newer"
+      - Pull=newer
       - |
         [Install]
         WantedBy=default.target

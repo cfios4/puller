@@ -12,12 +12,26 @@
   loop_control:
     loop_var: app_for_data
 
+- name: Create pod for immich containers
+  containers.podman.podman_pod:
+    name: immich
+    state: quadlet
+    ports: 
+      - "2283:2283"
+    quadlet_filename: immich-pod
+    quadlet_file_mode: '0644'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    quadlet_options:
+      - |
+        [Install]
+        WantedBy=default.target
+
 - name: Create Immich Database container
   containers.podman.podman_container:
     name: immich-database
     image: "ghcr.io/immich-app/postgres:{{ immich_database_version }}"
     state: quadlet
-    pod: new:immich
+    pod: immich
     volumes:
       - "{{ container_appdata_location }}/immich/immich-database:/var/lib/postgresql/data:z"
     env:
@@ -59,6 +73,7 @@
         [Unit]
         After=immich-database.service
         Requires=immich-database.service
+
         [Install]
         WantedBy=default.target
   notify: 
@@ -97,6 +112,7 @@
         [Unit]
         After=immich-database.service
         Requires=immich-database.service
+
         [Install]
         WantedBy=default.target
   notify: 
@@ -121,6 +137,7 @@
         [Unit]
         After=immich-database.service
         Requires=immich-database.service
+
         [Install]
         WantedBy=default.target
   notify: 

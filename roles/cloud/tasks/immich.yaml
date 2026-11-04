@@ -18,7 +18,7 @@
     state: quadlet
     ports: 
       - "2283:2283"
-    quadlet_filename: immich-pod
+    quadlet_filename: immich
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
     quadlet_options:

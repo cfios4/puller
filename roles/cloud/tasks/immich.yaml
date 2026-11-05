@@ -7,8 +7,8 @@
     group: 1000
     mode: '1777'
   loop:
-    - immich-database
-    - immich-server
+    - database
+    - server
   loop_control:
     loop_var: app_for_data
 
@@ -33,7 +33,7 @@
     state: quadlet
     pod: immich.pod
     volumes:
-      - "{{ container_appdata_location }}/immich/immich-database:/var/lib/postgresql/data:z"
+      - "{{ container_appdata_location }}/immich/database:/var/lib/postgresql/data:z"
     env:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "{{ postgres_password }}"
@@ -87,7 +87,7 @@
     state: quadlet
     pod: immich.pod
     volumes:
-      - "{{ container_appdata_location }}/immich/immich-server:/data:z" # photo uploads
+      - "{{ container_appdata_location }}/immich/server:/data:z" # photo uploads, probably mount nfs here
       - "/etc/localtime:/etc/localtime:ro"
     env:
       REDIS_HOSTNAME: localhost

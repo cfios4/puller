@@ -14,3 +14,17 @@
     name: "nfs-server.service"
     state: started
     enabled: true
+
+- name: Open firewall port for NFSv3 # clients mount with nfs v3
+  ansible.posix.firewalld:
+    service: "{{ fw_svc }}"
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true
+  loop:
+    - nfs3
+    - mountd
+    - rpc-bind
+  loop_control:
+    loop_var: fw_svc

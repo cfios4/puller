@@ -1,7 +1,7 @@
 ---
 - name: Create immich containers directory
   ansible.builtin.file:
-    path: "{{ container_appdata_location }}/immich/{{ app_for_data }}"
+    path: "{{ container_appdata_location }}/immich/{{ app_for_data }}" # photo uploads to server/, probably mount nfs there
     state: directory
     owner: 1000
     group: 1000
@@ -87,7 +87,7 @@
     state: quadlet
     pod: immich.pod
     volumes:
-      - "{{ container_appdata_location }}/immich/server:/data:z" # photo uploads, probably mount nfs here
+      - "{{ container_appdata_location }}/immich/server:/data:z"
       - "/etc/localtime:/etc/localtime:ro"
     env:
       REDIS_HOSTNAME: localhost
@@ -95,6 +95,8 @@
       DB_PASSWORD: "{{ postgres_password }}"
       DB_DATABASE_NAME: immich
       DB_HOSTNAME: localhost
+    etc_hosts:
+      immich-machine-learning: 127.0.0.1
     quadlet_filename: immich-server
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/

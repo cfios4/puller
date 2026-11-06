@@ -12,17 +12,17 @@ whitelist_lan {
 ### cloud
 git.{{ base_domain }} {
     # forgejo
-    reverse_proxy :3000
+    reverse_proxy moose.servers.lan:3000
 }
 
 photos.{{ base_domain }} {
     # immich
-    reverse_proxy :2283
+    reverse_proxy moose.servers.lan:2283
 }
 
 paper.{{ base_domain }} {
     # papra
-    reverse_proxy :1221
+    reverse_proxy moose.servers.lan:1221
 }
 
 ### media

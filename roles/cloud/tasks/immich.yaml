@@ -8,8 +8,7 @@
     mode: '1777'
   loop:
     - database
-    # server/ is chowned by root from nfs mount, rerunning pull creates error
-    # - server
+    - server
   loop_control:
     loop_var: app_for_data
 
@@ -38,7 +37,7 @@
 
       [Mount]
       What=mrs-puff.servers.lan:/var/mnt/mass/nfs/immich
-      Where={{ container_appdata_location }}/immich/server
+      Where={{ container_appdata_location }}/immich/{{ app_for_data[1] }}
       Type=nfs
       Options=vers=3,hard,bg,_netdev,noauto
 

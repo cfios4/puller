@@ -37,41 +37,51 @@
   environment: 
     XDG_RUNTIME_DIR: "/run/user/1000"
 
-- name: restart immich-database
-  become: true
-  become_user: bootc
-  ansible.builtin.systemd_service:
-    name: immich-database
-    state: restarted
-    scope: user
-  environment: 
-    XDG_RUNTIME_DIR: "/run/user/1000"
+# - name: restart immich-database
+#   become: true
+#   become_user: bootc
+#   ansible.builtin.systemd_service:
+#     name: immich-database
+#     state: restarted
+#     scope: user
+#   environment: 
+#     XDG_RUNTIME_DIR: "/run/user/1000"
 
-- name: restart immich-cache
-  become: true
-  become_user: bootc
-  ansible.builtin.systemd_service:
-    name: immich-cache
-    state: restarted
-    scope: user
-  environment: 
-    XDG_RUNTIME_DIR: "/run/user/1000"
+# - name: restart immich-cache
+#   become: true
+#   become_user: bootc
+#   ansible.builtin.systemd_service:
+#     name: immich-cache
+#     state: restarted
+#     scope: user
+#   environment: 
+#     XDG_RUNTIME_DIR: "/run/user/1000"
 
-- name: restart immich-server
-  become: true
-  become_user: bootc
-  ansible.builtin.systemd_service:
-    name: immich-server
-    state: restarted
-    scope: user
-  environment: 
-    XDG_RUNTIME_DIR: "/run/user/1000"
+# - name: restart immich-server
+#   become: true
+#   become_user: bootc
+#   ansible.builtin.systemd_service:
+#     name: immich-server
+#     state: restarted
+#     scope: user
+#   environment: 
+#     XDG_RUNTIME_DIR: "/run/user/1000"
 
-- name: restart immich-ml
+# - name: restart immich-ml
+#   become: true
+#   become_user: bootc
+#   ansible.builtin.systemd_service:
+#     name: immich-ml
+#     state: restarted
+#     scope: user
+#   environment: 
+#     XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: restart immich-pod
   become: true
   become_user: bootc
   ansible.builtin.systemd_service:
-    name: immich-ml
+    name: immich-pod
     state: restarted
     scope: user
   environment: 

@@ -27,6 +27,24 @@
 #       - Device=10.0.30.3:/var/mnt/mass/nfs/immich
 #       - Options=vers=3,hard,bg,_netdev,noauto
 
+- name: Create NFS .mount for immich-server
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/var-opt-containers-immich-server.mount
+    content: |
+      [Unit]
+      Description=NFS Mount for Immich
+      After=network-online.target
+      Wants=network-online.target
+
+      [Mount]
+      What=mrs-puff.servers.lan:/var/mnt/mass/nfs/immich
+      Where="{{ container_appdata_location }}/immich/server"
+      Type=nfs
+      Options=vers=3,hard,bg,_netdev,noauto
+
+      [Install]
+      WantedBy=multi-user.target
+
 - name: Create pod for immich containers
   containers.podman.podman_pod:
     name: immich

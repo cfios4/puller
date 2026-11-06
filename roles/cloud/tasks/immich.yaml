@@ -31,6 +31,8 @@
     state: quadlet
     ports: 
       - "2283:2283"
+    etc_hosts:
+      immich-machine-learning: 127.0.0.1
     quadlet_filename: immich
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
@@ -82,8 +84,6 @@
       DB_PASSWORD: "{{ postgres_password }}"
       DB_DATABASE_NAME: immich
       DB_HOSTNAME: localhost
-    etc_hosts:
-      immich-machine-learning: 127.0.0.1
     quadlet_filename: immich-server
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/

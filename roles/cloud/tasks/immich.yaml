@@ -8,22 +8,23 @@
     mode: '1777'
   loop:
     - database
-    # - server
+    - server
   loop_control:
     loop_var: app_for_data
 
-- name: Define the Immich server NFS volume
-  containers.podman.podman_volume:
-    name: immich-server-nfs-mount
-    state: quadlet
-    quadlet_filename: immich-server-nfs-mount
-    quadlet_file_mode: '0644'
-    quadlet_dir: /etc/containers/systemd/users/1000
-    quadlet_options:
-      - VolumeName=immich-server-nfs-mount
-      - Type=nfs
-      - Device=10.0.30.3:/var/mnt/mass/nfs/immich
-      - Options=vers=3,hard,bg,_netdev,noauto
+# DOESNT WORK WITH ROOTLESS
+# - name: Define the Immich server NFS volume
+#   containers.podman.podman_volume:
+#     name: immich-server-nfs-mount
+#     state: quadlet
+#     quadlet_filename: immich-server-nfs-mount
+#     quadlet_file_mode: '0644'
+#     quadlet_dir: /etc/containers/systemd/users/1000
+#     quadlet_options:
+#       - VolumeName=immich-server-nfs-mount
+#       - Type=nfs
+#       - Device=10.0.30.3:/var/mnt/mass/nfs/immich
+#       - Options=vers=3,hard,bg,_netdev,noauto
 
 - name: Create pod for immich containers
   containers.podman.podman_pod:
@@ -76,7 +77,7 @@
     state: quadlet
     pod: immich.pod
     volumes:
-      - immich-server-nfs-mount.volume:/data #"{{ container_appdata_location }}/immich/server:/data:z"
+      - "{{ container_appdata_location }}/immich/server:/data:z" # immich-server-nfs-mount.volume:/data
       - "/etc/localtime:/etc/localtime:ro"
     env:
       REDIS_HOSTNAME: localhost
@@ -94,8 +95,8 @@
       - Pull=newer
       - |
         [Unit]
-        After=immich-database.service
-        Requires=immich-database.service
+        After=immich-database.service var-opt-containers-immich-server.mount
+        Requires=immich-database.service var-opt-containers-immich-server.mount
 
         [Install]
         WantedBy=default.target

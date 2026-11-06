@@ -11,6 +11,13 @@
     - server
   loop_control:
     loop_var: app_for_data
+  register: immich_dir_result
+  failed_when: >-
+    immich_dir_result is failed and
+    not (
+      app_for_data == 'server' and
+      'Operation not permitted' in (immich_dir_result.msg | default(''))
+    )
 
 # DOESNT WORK WITH ROOTLESS
 # - name: Define the Immich server NFS volume

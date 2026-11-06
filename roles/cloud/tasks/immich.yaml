@@ -43,6 +43,7 @@
 
       [Install]
       WantedBy=multi-user.target
+  notify: start immich-server-nfs-mount
 
 - name: Create pod for immich containers
   containers.podman.podman_pod:

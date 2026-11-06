@@ -86,3 +86,9 @@
     scope: user
   environment: 
     XDG_RUNTIME_DIR: "/run/user/1000"
+
+- name: start immich-server-nfs-mount
+  ansible.builtin.systemd_service:
+    name: var-opt-containers-immich-server.mount
+    state: restarted
+    daemon-reload: true

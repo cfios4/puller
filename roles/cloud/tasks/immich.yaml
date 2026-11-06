@@ -31,8 +31,8 @@
     state: quadlet
     ports: 
       - "2283:2283"
-    etc_hosts:
-      immich-machine-learning: 127.0.0.1
+    add_host:
+      - "immich-machine-learning:127.0.0.1"
     quadlet_filename: immich
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/
@@ -109,6 +109,7 @@
     image: "ghcr.io/immich-app/immich-machine-learning:{{ immich_server_version }}"
     state: quadlet
     pod: immich.pod
+    network: none
     quadlet_filename: immich-ml
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/

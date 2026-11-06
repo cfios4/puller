@@ -8,7 +8,7 @@
     mode: '1777'
   loop:
     - database
-    - server
+    # - server
   loop_control:
     loop_var: app_for_data
 

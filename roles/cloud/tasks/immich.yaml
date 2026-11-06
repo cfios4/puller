@@ -37,7 +37,7 @@
 
       [Mount]
       What=mrs-puff.servers.lan:/var/mnt/mass/nfs/immich
-      Where={{ container_appdata_location }}/immich/{{ app_for_data[1] }}
+      Where={{ container_appdata_location }}/immich/server
       Type=nfs
       Options=vers=3,hard,bg,_netdev,noauto
 

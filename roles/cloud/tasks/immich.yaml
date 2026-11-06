@@ -18,12 +18,12 @@
     state: quadlet
     quadlet_filename: immich-server-nfs-mount
     quadlet_file_mode: '0644'
-    quadlet_dir: /etc/containers/systemd
+    quadlet_dir: /etc/containers/systemd/users/1000
     quadlet_options:
       - VolumeName=immich-server-nfs-mount
       - Type=nfs
-      - Device=/var/mnt/mass/nfs/immich
-      - Options=vers=3,addr=10.0.30.3,rw,hard,bg,_netdev,noauto
+      - Device=10.0.30.3:/var/mnt/mass/nfs/immich
+      - Options=vers=3,hard,bg,_netdev,noauto
 
 - name: Create pod for immich containers
   containers.podman.podman_pod:

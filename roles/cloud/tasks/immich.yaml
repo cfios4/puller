@@ -11,13 +11,7 @@
     - server
   loop_control:
     loop_var: app_for_data
-  register: immich_dir_result
-  failed_when: >-
-    immich_dir_result is failed and
-    not (
-      app_for_data == 'server' and
-      'Operation not permitted' in (immich_dir_result.msg | default(''))
-    )
+  ignore_errors: true # task will fail when nfs is already mounted at server/
 
 # DOESNT WORK WITH ROOTLESS
 # - name: Define the Immich server NFS volume

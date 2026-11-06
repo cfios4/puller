@@ -8,7 +8,8 @@
     mode: '1777'
   loop:
     - database
-    - server
+    # server/ is chowned by root from nfs mount, rerunning pull creates error
+    # - server
   loop_control:
     loop_var: app_for_data
 

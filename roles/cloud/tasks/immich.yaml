@@ -12,6 +12,19 @@
   loop_control:
     loop_var: app_for_data
 
+- name: Define the Immich server NFS volume
+  containers.podman.podman_volume:
+    name: immich-server-nfs-mount
+    state: quadlet
+    quadlet_filename: immich-server-nfs-mount
+    quadlet_file_mode: '0644'
+    quadlet_dir: /etc/containers/systemd
+    quadlet_options:
+      - VolumeName=immich-server-nfs-mount
+      - Type=nfs
+      - Device=/var/mnt/mass/nfs/immich
+      - Options=vers=3,addr=10.0.30.3,rw,hard,bg,_netdev,noauto
+
 - name: Create pod for immich containers
   containers.podman.podman_pod:
     name: immich
@@ -54,32 +67,6 @@
     - daemon-reload quadlets
     - restart immich-database
 
-- name: Create Immich Caching container
-  containers.podman.podman_container:
-    name: immich-cache
-    image: docker.io/valkey/valkey:9
-    state: quadlet
-    pod: immich.pod
-    healthcheck: redis-cli ping | grep -q PONG || exit 1
-    quadlet_filename: immich-cache
-    quadlet_file_mode: '0644'
-    quadlet_dir: /etc/containers/systemd/users/1000/
-    labels:
-      io.containers.autoupdate: registry
-    restart_policy: always
-    quadlet_options:
-      - Pull=newer
-      - |
-        [Unit]
-        After=immich-database.service
-        Requires=immich-database.service
-
-        [Install]
-        WantedBy=default.target
-  notify: 
-    - daemon-reload quadlets
-    - restart immich-cache
-
 - name: Create Immich Server container
   containers.podman.podman_container:
     name: immich-server
@@ -87,7 +74,7 @@
     state: quadlet
     pod: immich.pod
     volumes:
-      - "{{ container_appdata_location }}/immich/server:/data:z"
+      - immich-server-nfs-mount.volume:/data #"{{ container_appdata_location }}/immich/server:/data:z"
       - "/etc/localtime:/etc/localtime:ro"
     env:
       REDIS_HOSTNAME: localhost
@@ -140,6 +127,32 @@
   notify: 
     - daemon-reload quadlets
     - restart immich-ml
+
+- name: Create Immich Caching container
+  containers.podman.podman_container:
+    name: immich-cache
+    image: docker.io/valkey/valkey:9
+    state: quadlet
+    pod: immich.pod
+    healthcheck: redis-cli ping | grep -q PONG || exit 1
+    quadlet_filename: immich-cache
+    quadlet_file_mode: '0644'
+    quadlet_dir: /etc/containers/systemd/users/1000/
+    labels:
+      io.containers.autoupdate: registry
+    restart_policy: always
+    quadlet_options:
+      - Pull=newer
+      - |
+        [Unit]
+        After=immich-database.service
+        Requires=immich-database.service
+
+        [Install]
+        WantedBy=default.target
+  notify: 
+    - daemon-reload quadlets
+    - restart immich-cache
 
 - name: Open firewall port for Immich
   ansible.posix.firewalld:

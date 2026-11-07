@@ -18,7 +18,6 @@
     volumes:
       - "{{ container_appdata_location }}/jellyfin:/config:Z"
       - "{{ media_dir }}:/media:ro"
-      - "type=tmpfs,destination=/cache"
     tmpfs:
        /cache: "rw,mode=1777"
     env:

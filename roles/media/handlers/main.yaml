@@ -1,12 +1,16 @@
 ---
 - name: daemon-reload quadlets
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
-    scope: user
     daemon_reload: true
-  environment: 
-    XDG_RUNTIME_DIR: "/run/user/1000"  
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart jellyfin
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: jellyfin
     state: restarted
@@ -15,6 +19,8 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart radarr
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: radarr
     state: restarted
@@ -23,6 +29,8 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart sonarr
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: sonarr
     state: restarted
@@ -31,6 +39,8 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart sabnzbd
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: sabnzbd
     state: restarted
@@ -39,6 +49,8 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart seerr
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: seerr
     state: restarted
@@ -47,6 +59,8 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
 
 - name: restart wizarr
+  become: true
+  become_user: bootc
   ansible.builtin.systemd_service:
     name: wizarr
     state: restarted

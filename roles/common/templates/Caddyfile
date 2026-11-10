@@ -1,3 +1,8 @@
+{
+#    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+}
+
 (whitelist_lan) {
     @blocked not remote_ip 192.168.0.0/16 10.0.20.0/24 10.0.30.0/24
     abort @blocked
@@ -9,10 +14,21 @@
     reverse_proxy localhost:3000
 }
 
+### voice
+vc.{{ base_domain }} {
+    # fluxer
+    reverse_proxy fluxer.servers.lan:8080
+}
+
 ### cloud
 git.{{ base_domain }} {
     # forgejo
     reverse_proxy moose.servers.lan:3000
+}
+
+vault.{{ base_domain }} {
+    # vaultwarden
+    reverse_proxy moose.servers.lan:8000
 }
 
 photos.{{ base_domain }} {

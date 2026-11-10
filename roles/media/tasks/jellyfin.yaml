@@ -3,8 +3,8 @@
   ansible.builtin.file:
     path: "{{ container_appdata_location }}/jellyfin"
     state: directory
-    owner: root
-    group: root
+    owner: 1000
+    group: 1000
     mode: '1777'
 
 - name: Create Jellyfin container

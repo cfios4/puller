@@ -11,3 +11,4 @@
         name: "{{ item }}"
       loop: "{{ group_names | difference(['all']) }}"
       tags: always
+      when: group_names[0] is defined

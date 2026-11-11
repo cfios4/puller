@@ -1,0 +1,13 @@
+timezone: America/Los_Angeles
+ansible_pull_url: https://git.cafio.co/casey/puller.git
+base_domain: cafio.co
+
+beszel_agent_key:
+beszel_agent_hub_url:
+beszel_agent_token:
+
+container_appdata_location: /var/opt/containers
+backup_appdata_location: /var/srv/nfs/backups
+backup_paths:
+  - src: "{{ container_appdata_location }}"
+    dest: "mrs-puff.servers.lan:{{ backup_appdata_location }}/{{ inventory_hostname }}"

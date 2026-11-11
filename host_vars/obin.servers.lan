@@ -1,0 +1,5 @@
+backup_paths:
+  - src: "{{ container_appdata_location }}"
+    dest: "{{ backup_appdata_location }}/{{ group_names[0] }}/{{ inventory_hostname }}"
+  - src: foo
+    dest: bar

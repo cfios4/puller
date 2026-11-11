@@ -1,20 +1,5 @@
 ---
 all:
-  vars:
-    timezone: America/Los_Angeles
-    ansible_pull_url: https://git.cafio.co/casey/puller.git
-    base_domain: cafio.co
-
-    beszel_agent_key:
-    beszel_agent_hub_url:
-    beszel_agent_token:
-
-    container_appdata_location: /var/opt/containers
-    backup_appdata_location: /var/srv/nfs/backups
-    backup_paths:
-      - src: "{{ container_appdata_location }}"
-        dest: "mrs-puff.servers.lan:{{ backup_appdata_location }}/{{ inventory_hostname }}"
-
   children:
     hypervisor:
       hosts:
@@ -23,35 +8,19 @@ all:
     nas:
       hosts:
         mrs-puff.servers.lan: # + media backup builder
-          nfs_export:
-            - /var/mnt/fast/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
-            - /var/mnt/mass/nfs 10.0.20.0/24(rw,sync,no_subtree_check) 10.0.30.0/24(rw,sync,no_subtree_check)
 
     cloud:
-      vars:
-        immich_server_version: v3
-        immich_database_version: 14-vectorchord1.1.1
-
       hosts:
         moose.servers.lan:
 
     media:
-      vars:
-        media_dir: /var/mnt/mass/media
-    
       hosts:
         mrs-puff.servers.lan:
 
     # llm:
     #   hosts:
     #     obin.servers.lan:
-    #       backup_paths:
-    #         - src: "{{ container_appdata_location }}"
-    #           dest: "{{ backup_appdata_location }}/{{ group_names[0] }}/{{ inventory_hostname }}"
-    #         - src: foo
-    #           dest: bar
 
     # dns:
     #   hosts:
     #     dns.servers.lan:
-    #       ansible_host: 10.0.30.53

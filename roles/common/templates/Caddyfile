@@ -4,7 +4,7 @@
 }
 
 (whitelist_lan) {
-    @blocked not remote_ip 192.168.0.0/16 10.0.20.0/24 10.0.30.0/24
+    @blocked not remote_ip 192.168.0.0/16 10.0.0.0/8
     abort @blocked
 }
 

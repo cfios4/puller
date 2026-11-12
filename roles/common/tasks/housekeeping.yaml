@@ -23,6 +23,14 @@
     group: root
     mode: '0777'
 
+- name: Create bootc-fetch-apply-updates dropins folder
+  ansible.builtin.file:
+    path: /etc/systemd/system/bootc-fetch-apply-updates.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Edit bootc-fetch-apply-updates unit to remove ostree dep
   ansible.builtin.copy:
     dest: /etc/systemd/system/bootc-fetch-apply-updates.service.d/override.conf

@@ -2,6 +2,7 @@
 
 ######### exports #########
 export EDITOR="$(which vim)"
+export PATH=$PATH:/var/opt/bin
 ######### exports #########
 
 ######### shell evals ########

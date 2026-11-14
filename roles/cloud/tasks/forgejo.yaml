@@ -21,7 +21,7 @@
     env:
       USER_UID: 1000
       USER_GID: 1000
-      FORGEJO__server__ROOT_URL: "git.{{ base_domain }}"
+      FORGEJO__server__ROOT_URL: "https://git.{{ base_domain }}"
     quadlet_filename: forgejo
     quadlet_file_mode: '0644'
     quadlet_dir: /etc/containers/systemd/users/1000/

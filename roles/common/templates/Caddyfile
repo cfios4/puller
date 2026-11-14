@@ -1,6 +1,9 @@
 {
 #    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
     acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    storage file_system {
+        root /var/lib/caddy
+    }
 }
 
 (whitelist_lan) {

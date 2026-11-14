@@ -11,7 +11,7 @@
     - server
   loop_control:
     loop_var: app_for_data
-  ignore_errors: true # task will fail when nfs is already mounted at server/
+  ignore_errors: true # task will fail when nfs is already mounted at server/ because its owned by root
 
 # DOESNT WORK WITH ROOTLESS
 # - name: Define the Immich server NFS volume
